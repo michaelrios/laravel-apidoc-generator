@@ -11,12 +11,14 @@
 
 ```bash
 curl -X {{$parsedRoute['methods'][0]}} "{{config('app.docs_url') ?: config('app.url')}}/{{$parsedRoute['uri']}}" \
--H "Accept: application/json"@if(count($parsedRoute['parameters'])) \
+-H "Accept: application/json"@if(count($parsedRoute['parameters'])) -d '{
+<?php $counter = 0; ?>
 @foreach($parsedRoute['parameters'] as $attribute => $parameter)
-    -d "{{$attribute}}"="{{$parameter['value']}}" \
+    "{{$attribute}}":"{{$parameter['value']}}"@if(++$counter < count($parsedRoute['parameters'])),
+    @endif
 @endforeach
+}'
 @endif
-
 ```
 
 ```javascript
