@@ -28,7 +28,7 @@ var settings = {
     "url": "{{config('app.url')}}/{{$parsedRoute['uri']}}",
     "method": "{{$parsedRoute['methods'][0]}}",
     @if(count($parsedRoute['parameters']))
-"data": {!! str_replace('    ','        ',json_encode(array_combine(array_keys($parsedRoute['parameters']), array_map(function($param){ return $param['value']; },$parsedRoute['parameters'])), JSON_PRETTY_PRINT)) !!},
+"data": JSON.stringify({!! str_replace('    ','        ',json_encode(array_combine(array_keys($parsedRoute['parameters']), array_map(function($param){ return $param['value']; },$parsedRoute['parameters'])), JSON_PRETTY_PRINT)) !!}),
     @endif
 "headers": {
         "accept": "application/json"
